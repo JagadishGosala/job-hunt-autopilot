@@ -6,7 +6,7 @@ Run setup on the first run, and again when the candidate asks to update their re
 
 ## 0. Reuse what you already know
 
-Before asking anything, check what's already known about the candidate: the memory file `areas/job-hunt.md`, other memory about their job, role and location, and anything they said earlier in this conversation. Pre-fill those answers and ask the candidate to **confirm** them rather than retype them. Never assume a pre-filled answer is current without confirmation.
+Before asking anything, check what's already known about the candidate: the memory file `/areas/job-hunt.md`, other memory about their job, role and location, and anything they said earlier in this conversation. Pre-fill those answers and ask the candidate to **confirm** them rather than retype them. Never assume a pre-filled answer is current without confirmation.
 
 ## 1. Get the resume (required)
 
@@ -50,7 +50,7 @@ Use AskUserQuestion for anything with discrete options. Ask open questions in pl
 - Jobs to prepare per portal per run [10], and the daily application cap per portal [10].
 - Consents they pre-approve on forms [privacy-notice receipt; "materials are my own work"]. Demographic questions default to "prefer not to say".
 - Tracker: a Google Sheet URL to log to, "create one", or "none" [none].
-- A folder on their computer for resumes and run logs (needs the Claude desktop app) [none].
+- A folder on their computer for resumes and run logs. This needs the Claude desktop app, and it's **required for any `tailored` portal**: Chrome can only upload a file that is on their computer. If they have no folder, set every portal to `profile`, or tell them tailored portals will end as `blocked` with the PDF sent in chat for them to upload by hand. To connect one, use `device_request_folder_access`, or ask them to use **Add folder** in the desktop app.
 - **Memory:** "Should I also save your application answers to Claude's memory, so any chat can reuse them?" [Yes]
 
 ## 3. Choose the store
@@ -66,18 +66,19 @@ Check these once and tell the candidate plainly what's missing. Don't stop setup
 - **Claude in Chrome** (needed to apply): load the tools and call `tabs_context_mcp`. Ask them to sign in to each portal in Chrome.
 - **Apify connector** (recommended for searching job boards cheaply; it bills the candidate's Apify account): `SearchMcpRegistry` for "apify". If it's missing, offer it with `SuggestConnectors`. Without Apify, the Scout searches in the browser instead, which is slower.
 - **Google Sheets** (only if they want a tracker).
-- **Desktop app folder** (only if they want local files).
+- **Desktop app folder** (needed for `tailored` portals; see above).
 
 ## 5. Save
 
 1. Write `settings.json` in the shape of `templates/settings.example.json`, the `master-resume.json` you built, `answer-bank.json` (copy `templates/answer-bank.empty.json`, then add each standing answer from step 2 as an entry with `answered_by: "candidate"`), and `jobs.json` as `{"jobs": {}}`.
 2. Generate the Scout's search queries from their roles and locations into `settings.search` (see the example).
-3. **Memory:** write `areas/job-hunt.md` as described in `storage-and-memory.md`. Saving it is part of what the candidate asked for at setup, so do it now. If a save is refused (pay, for example, can be a protected detail), tell them in one line; the store still has it.
+3. **Memory:** write `/areas/job-hunt.md` as described in `storage-and-memory.md`. Saving it is part of what the candidate asked for at setup, so do it now. If a save is refused (pay, for example, can be a protected detail), tell them in one line; the store still has it.
 4. Render their untailored resume once to check the tools work:
 
    ```
-   python3 scripts/resume_tool.py master master-resume.json work/spec-master.json
-   python3 scripts/resume_tool.py render master-resume.json work/spec-master.json work/master
+   cd /home/claude/job-hunt
+   python3 resume_tool.py master master-resume.json spec-master.json
+   python3 resume_tool.py render master-resume.json spec-master.json work/master
    ```
 
    Save `spec-master.json` to the store and send them the PDF. If it differs visibly from their own resume, that's fine: this layout is ATS-friendly. Their own file stays the default for `profile` portals.

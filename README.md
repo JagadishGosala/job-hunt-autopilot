@@ -68,12 +68,12 @@ flowchart LR
 
 | | Needed? | Why |
 |---|---|---|
-| Claude (Pro, Max, Team or Enterprise) with code execution | Yes | Runs the skill and renders resumes |
+| A Claude plan with Skills and code execution turned on | Yes | Runs the skill and renders resumes |
 | Claude in Chrome extension, signed in to your job portals | To apply | Fills and submits forms in your browser |
 | A claude.ai **Project** to run it in | Recommended | Keeps your files (resume, answers, job list) between chats; needed for scheduled runs |
 | Apify connector and account | Recommended | Cheap job-board searching (a few cents to about $1 per portal per run, billed to your Apify account). Without it, the skill searches in the browser, which is slower. |
 | Google Sheets connector | Optional | Application tracker |
-| Claude desktop app | Optional | Saves resumes and run logs to a folder on your computer |
+| Claude desktop app with a folder added | For tailored resumes | Chrome can only upload a resume that is on your computer. Without it, use portals that keep your resume on your profile (Naukri, hirist.tech, foundit). |
 
 ## Install
 
@@ -86,7 +86,7 @@ flowchart LR
 ### Claude Code
 
 ```
-/plugin marketplace add <your-github-username>/job-hunt-autopilot
+/plugin marketplace add JagadishGosala/job-hunt-autopilot
 /plugin install job-hunt-autopilot@job-hunt-autopilot
 ```
 
@@ -135,18 +135,16 @@ skills/job-hunt-autopilot/
 .claude-plugin/            Claude Code plugin + marketplace manifests
 tools/package.py           builds dist/job-hunt-autopilot.zip
 .github/workflows/release.yml  attaches the zip to each GitHub release
+RELEASING.md               how to publish a new version
 ```
 
-## Releasing a new version
+## Updating
 
-1. Bump `version` in `.claude-plugin/plugin.json`.
-2. Commit, then tag and push:
+New versions are published on the **Releases** page.
+- **claude.ai:** download the new zip and upload it again. Your settings, resume and saved answers live in your Project, so nothing is lost.
+- **Claude Code:** run `/plugin marketplace update job-hunt-autopilot`.
 
-   ```
-   git tag v1.0.1 && git push --tags
-   ```
-
-The workflow builds the zip and attaches it to the release. Users of the claude.ai upload re-upload the new zip; Claude Code users run `/plugin marketplace update`.
+Maintainers: see [RELEASING.md](RELEASING.md).
 
 ## Notes
 

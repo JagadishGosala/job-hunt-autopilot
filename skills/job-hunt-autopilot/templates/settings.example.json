@@ -49,8 +49,8 @@
     "posted_within_days": 3
   },
   "tracker_sheet_url": null,
-  "output_folder": null,
-  "memory": {"enabled": true, "file": "areas/job-hunt.md"},
+  "output_folder": "D:\\Jobs",
+  "memory": {"enabled": true, "file": "/areas/job-hunt.md"},
   "store": {"backend": "project", "location": "job-hunt/"},
   "schedule": {"discover_task_id": null, "apply_task_id": null}
 }

@@ -14,20 +14,24 @@ Nothing in this skill is about a specific person. All personal data is collected
 The **store** is a set of files under the prefix `job-hunt/`. Look for it in this order and use the first that has `job-hunt/settings.json`:
 
 1. **Project docs.** If the Projects tool is available, `project_read` `job-hunt/settings.json`. This is the recommended store, and the only one that works for scheduled runs without the computer.
-2. **Memory pointer.** Read the memory file `areas/job-hunt.md` (inside the Project's memory folder when the session is bound to a Project). Its `store:` line says where the store is.
+2. **Memory pointer.** Read the memory file `/areas/job-hunt.md` (inside the Project's memory folder when the session is bound to a Project). Its `store:` line says where the store is.
 3. **A connected local folder.** If the `device_*` tools are available, look for `job-hunt/settings.json` in each connected folder.
 
 **If no store is found, this is the first run.** Read `references/setup.md` and run setup before anything else, even if the user asked for something else ("apply for jobs"). Tell them in one line that you need a few details first.
 
 Then load `settings.json`, `master-resume.json` and `answer-bank.json`, and set up the workspace:
 
+`<skill-dir>` below means the folder this SKILL.md is in.
+
 ```bash
 mkdir -p /home/claude/job-hunt/work
 cp <skill-dir>/scripts/*.py /home/claude/job-hunt/
-# write settings.json, master-resume.json, answer-bank.json from the store into /home/claude/job-hunt/
-python3 -c "import playwright" 2>/dev/null || pip install --break-system-packages playwright && python3 -m playwright install chromium
-which pdftotext || (apt-get install -y poppler-utils 2>/dev/null || true)
+# then write settings.json, master-resume.json, spec-master.json and answer-bank.json from the store into /home/claude/job-hunt/
+python3 -c "import playwright" 2>/dev/null || { pip install --break-system-packages playwright && python3 -m playwright install chromium; }
+which pdftotext >/dev/null || apt-get install -y poppler-utils
 ```
+
+All later commands (`python3 resume_tool.py ...`, `python3 scout_filter.py ...`) run from `/home/claude/job-hunt`.
 
 `references/storage-and-memory.md` describes every file in the store, how to read and write each backend, and exactly what goes to memory. Read it before the first write of a run.
 
@@ -86,7 +90,8 @@ loop:
 3. **Top-up:** for each portal below its target, promote `reserve` jobs (best `pool_rank` first) to `found` and rank again. Stop when the target is reached or the reserve is empty.
 4. Tailor ⇄ Validator loop for tailored-portal jobs, highest score first.
 5. **Present the shortlist** (all `ready` and `needs_review` jobs) as a numbered list: company, title, portal, location, score, one-line fit, main gap, and the link. If someone is present, ask for approval with AskUserQuestion (multi-select, in groups of up to 4) or ask them to reply "approve 1, 3, 5". If unattended, send the list with `SendUserMessage` and say they can reply in that chat or in any chat with this skill ("approve 1, 3, 5").
-6. Write the run log.
+6. Save the numbered list to `shortlist.json` in the store, so a later "approve 1, 3" maps to the right jobs.
+7. Write the run log. Once a week (check the last housekeeping date in `jobs.json`), do the housekeeping in `schemas.md`.
 
 ### approve
 
@@ -94,7 +99,7 @@ Map the numbers in the reply to job ids using the last presented shortlist (`sho
 
 ### apply
 
-Run the Applier (`references/agents/applier.md`) on every `approved` job and every `draft_waiting_answer` job whose questions are now all answered. **Apply only to jobs the candidate approved.** This mode needs Claude in Chrome, so the candidate's computer must be on with Chrome open. If Chrome isn't reachable, say so and stop. Don't mark anything as failed.
+Run the Applier (`references/agents/applier.md`) on every `approved` job and every `draft_waiting_answer` job whose questions are now all answered. **Apply only to jobs the candidate approved.** This mode needs Claude in Chrome, so the candidate's computer must be on with Chrome open. If Chrome isn't reachable, say so and stop. Don't mark anything as failed. Uploading a tailored resume also needs `settings.output_folder`: Chrome can only upload files that are on the candidate's computer.
 
 At the end, present every open question in one numbered message: company, role, the exact question, field type and options, and character limit. The candidate can answer by replying.
 

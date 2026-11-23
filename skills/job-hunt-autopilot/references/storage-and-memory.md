@@ -29,7 +29,7 @@ Schemas are in `schemas.md`.
 
 **Concurrency:** only one run at a time. At the start of discover and apply, write `run_lock: {mode, started_at}` into `jobs.json`. If another lock is under 3 hours old, say a run is already in progress and stop. Clear the lock at the end.
 
-**Local output folder** (optional, `settings.output_folder`): also save each submitted resume PDF there as `Resume for <Company> - <Title> (<Portal>) - <YYYY-MM-DD>.pdf`, plus a copy of each run log. Always deliver files through `device_commit_files`.
+**Local output folder** (`settings.output_folder`; required for tailored uploads): save each tailored resume PDF there before uploading it, because Chrome can only upload files that are on the candidate's computer. Name it `Resume for <Company> - <Title> (<Portal>) - <YYYY-MM-DD>.pdf`. Also save a copy of each run log there. Always deliver files through `device_commit_files`.
 
 ## Memory
 
@@ -41,7 +41,7 @@ Claude's memory makes the candidate's answers available in any chat, even outsid
 
 Use memory only if the candidate said yes at setup (`settings.memory.enabled`).
 
-**Where:** one file, `areas/job-hunt.md`. When the session is bound to a claude.ai Project, memory writes must go under that Project's memory folder (`/projects/<project-id>/areas/job-hunt.md`). Read before writing, and pass `if_version`.
+**Where:** one file, `/areas/job-hunt.md`. When the session is bound to a claude.ai Project, memory writes must go under that Project's memory folder (`/projects/<project-id>/areas/job-hunt.md`); the memory tool's instructions name that folder. Read before writing, and pass `if_version`.
 
 **Format:**
 

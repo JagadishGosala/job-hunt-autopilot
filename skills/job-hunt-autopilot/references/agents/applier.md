@@ -34,10 +34,11 @@ Then re-derive `voice.notes` from all of the candidate's own written answers, an
    - **Profile portal** (`resume: "profile"`): use the resume already on the portal profile. Never upload another.
    - **Tailored spec exists:**
      1. Re-render it with `resume_tool.py` and confirm `lint_pass`.
-     2. Name the PDF `Resume for <Company> - <Title> (<Portal>) - <YYYY-MM-DD>.pdf`.
-     3. If `output_folder` is set, save a copy there (`device_commit_files`).
-     4. Upload it with Claude in Chrome `file_upload`.
-     5. Set `resume_file`.
+     2. Copy the PDF to `/mnt/user-data/outputs/Resume for <Company> - <Title> (<Portal>) - <YYYY-MM-DD>.pdf`.
+     3. Write it into `settings.output_folder` on the candidate's computer with `device_commit_files`.
+     4. Upload **that device path** with Claude in Chrome `file_upload`. Chrome can only upload files on the candidate's computer, and at most 3.8 MB per call.
+     5. Set `resume_file` to the device path.
+     6. If there's no `output_folder` or the commit fails, fill the rest of the form and leave the tab open. Set `blocked` with `blocked_reason: "upload the attached resume by hand"`, and send the PDF in chat with `SendUserFile`.
    - **No tailored spec** (usually an override job): render `spec-master.json` the same way, with `notes: "applied with untailored master resume"`. Don't tailor during an apply run.
 3. **Open the application** (reuse the tab if a draft is already open), set `stage: "applying"`, and fill every field.
 4. **Answer each question in this order:**
