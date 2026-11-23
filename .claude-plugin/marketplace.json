@@ -1,0 +1,11 @@
+{
+  "name": "job-hunt-autopilot",
+  "owner": {"name": "Jagadish"},
+  "plugins": [
+    {
+      "name": "job-hunt-autopilot",
+      "source": "./",
+      "description": "Find, rank, tailor resumes for and apply to jobs with Claude in Chrome. Asks for your resume on first run and reuses your saved application answers."
+    }
+  ]
+}

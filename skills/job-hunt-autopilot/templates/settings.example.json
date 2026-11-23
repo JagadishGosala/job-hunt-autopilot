@@ -1,0 +1,56 @@
+{
+  "_about": "EXAMPLE ONLY (fictional candidate). Setup builds the real settings.json from the candidate's answers.",
+  "candidate": {
+    "name": "Asha Rao",
+    "email": "asha.rao@example.com",
+    "phone": "+91 90000 00000",
+    "links": {"linkedin": "linkedin.com/in/asha-rao-example", "github": "github.com/asha-rao-example", "portfolio": null}
+  },
+  "targets": {
+    "roles": ["Backend Engineer", "Full-Stack Engineer", "Tech Lead"],
+    "years_experience": 6,
+    "experience_band": 2,
+    "locations_ok": ["Bengaluru", "Bangalore"],
+    "locations_blocked": ["Mumbai", "Pune", "Chennai", "Hyderabad", "Delhi", "Gurgaon", "Gurugram", "Noida", "Kolkata"],
+    "work_modes": ["remote", "hybrid", "onsite"],
+    "title_include_regex": "back[\\s-]?end|full[\\s-]?stack|software engineer|\\bsde\\b|developer|tech(nical)? lead|platform engineer",
+    "title_exclude_regex": "\\bintern(ship)?\\b|trainee|fresher|\\bqa\\b|tester|sdet|data analyst|sales|marketing|support engineer|principal|director|head of|\\bvp\\b|manager",
+    "stack_exclude_regex": "\\.net|\\bc#|\\bphp\\b|salesforce|sap\\b|mainframe",
+    "stack_ok_regex": "python|node|go\\b|full[\\s-]?stack"
+  },
+  "compensation": {"currency": "INR", "unit": "LPA", "current": 18, "expected": 28},
+  "availability": {
+    "notice_period": "60 days",
+    "notice_field_fallback": "2 months",
+    "earliest_joining": "2027-02-01",
+    "last_working_day": null
+  },
+  "standing_answers": {"relocate": null, "in_person_interviews": "yes", "shifts": null, "travel": null},
+  "portals": [
+    {"name": "naukri", "resume": "profile", "enabled": true, "source_rank": 1},
+    {"name": "instahyre", "resume": "tailored", "enabled": true, "source_rank": 3},
+    {"name": "hirist.tech", "resume": "profile", "enabled": false, "source_rank": 2},
+    {"name": "foundit", "resume": "profile", "enabled": false, "source_rank": 1},
+    {"name": "linkedin", "resume": "tailored", "enabled": false, "source_rank": 2},
+    {"name": "company site", "resume": "tailored", "enabled": true, "source_rank": 4}
+  ],
+  "company_boards": [
+    {"company": "Example Co", "ats": "greenhouse", "token": "exampleco"}
+  ],
+  "excluded_employers": ["Current Employer Pvt Ltd"],
+  "limits": {"target_per_portal": 10, "fetch_per_portal": 40, "max_jobs_waiting": 60, "cap_per_portal": 10},
+  "consents": {
+    "auto_accept": ["privacy-notice receipt", "materials are my own work", "AI-use policy acknowledgement"],
+    "demographics": "decline"
+  },
+  "search": {
+    "keywords": ["backend engineer", "full stack developer", "python developer", "tech lead"],
+    "locations": ["Bengaluru", "Remote"],
+    "posted_within_days": 3
+  },
+  "tracker_sheet_url": null,
+  "output_folder": null,
+  "memory": {"enabled": true, "file": "areas/job-hunt.md"},
+  "store": {"backend": "project", "location": "job-hunt/"},
+  "schedule": {"discover_task_id": null, "apply_task_id": null}
+}

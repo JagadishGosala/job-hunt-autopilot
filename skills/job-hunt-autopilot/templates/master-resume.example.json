@@ -1,0 +1,82 @@
+{
+  "_about": "EXAMPLE ONLY (fictional candidate). The real master resume is transcribed from the candidate's own resume at setup: every fact verbatim, every number unchanged. Tailored resumes may select, reorder, trim and re-word facts, but may never add a skill, number, scope or responsibility that is not in this file.",
+  "contact": {
+    "name": "Asha Rao",
+    "phone": "+91 90000 00000",
+    "email": "asha.rao@example.com",
+    "linkedin": "linkedin.com/in/asha-rao-example",
+    "github": "github.com/asha-rao-example",
+    "portfolio": null,
+    "location": "Bengaluru, India",
+    "work_modes": "Open to Remote or Hybrid",
+    "notice": "60 days"
+  },
+  "summary_master": "Backend engineer with 6 years building payment and order systems in Python and Go. Led the move of checkout to an event-driven design that cut p95 latency from 900 ms to 240 ms, and mentor a team of 3.",
+  "title_lines": {
+    "backend": "Senior Backend Engineer",
+    "full_stack": "Full-Stack Engineer",
+    "team_lead": "Backend Tech Lead"
+  },
+  "skills": {
+    "Languages": ["Python", "Go", "SQL", "TypeScript"],
+    "Backend": ["Django", "FastAPI", "gRPC"],
+    "Data": ["PostgreSQL (query tuning, partitioning)", "Redis", "Kafka"],
+    "Infrastructure": ["AWS (EC2, SQS, RDS)", "Docker", "GitHub Actions"],
+    "Frontend": ["React"]
+  },
+  "experience": [
+    {
+      "id": "shopkart",
+      "company": "ShopKart (example)",
+      "title": "Senior Software Engineer",
+      "dates": "Jan 2022 – Present",
+      "descriptor": "E-commerce marketplace",
+      "groups": [
+        {
+          "heading": "Checkout platform",
+          "facts": [
+            {"id": "sk-checkout", "text": "Led the redesign of checkout into event-driven services on Kafka, cutting p95 latency from 900 ms to 240 ms.", "tags": ["architecture", "kafka", "performance"]},
+            {"id": "sk-lead", "text": "Mentor a team of 3 engineers; run design reviews and the on-call rotation for checkout.", "tags": ["leadership", "on-call"]},
+            {"id": "sk-idempotency", "text": "Added idempotency keys to the payments API, removing duplicate charges reported by support.", "tags": ["payments", "reliability"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fintrack",
+      "company": "FinTrack (example)",
+      "title": "Software Engineer",
+      "dates": "Jul 2019 – Dec 2021",
+      "descriptor": "Expense-management SaaS",
+      "groups": [
+        {
+          "heading": null,
+          "facts": [
+            {"id": "ft-reports", "text": "Built the reporting service in Django and PostgreSQL; partitioning cut monthly report time from 40 min to 6 min.", "tags": ["python", "postgres", "performance"]},
+            {"id": "ft-ui", "text": "Built React screens for expense approval used by 200+ customer companies.", "tags": ["frontend", "react"]}
+          ]
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "ratelimiter",
+      "name": "Open-source rate limiter",
+      "role": "author",
+      "link": "github.com/asha-rao-example/ratelimiter",
+      "facts": [
+        {"id": "rl-lib", "text": "Wrote a Redis-backed token-bucket rate limiter for FastAPI, with 300+ GitHub stars.", "tags": ["redis", "python", "open-source"]}
+      ]
+    }
+  ],
+  "education": [
+    {"degree": "B.E., Computer Science", "school": "Example Institute of Technology", "dates": "2015 – 2019"}
+  ],
+  "essence_fact_ids": ["sk-checkout", "sk-lead", "ft-reports"],
+  "common_jd_asks_not_in_resume": ["Kubernetes", "Java / Spring"],
+  "gap_patterns": ["\\bKubernetes\\b", "\\bk8s\\b", "\\bJava\\b", "\\bSpring\\b"],
+  "screening_years": {"Python": 6, "Go": 3, "Kafka": 2},
+  "defend_notes": {"sk-checkout": "p95 measured at the API gateway over 30 days, before vs after."},
+  "format": {"max_pages": 2}
+}

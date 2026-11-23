@@ -1,0 +1,32 @@
+{
+  "_about": "Apify scrapers that have worked for each portal. Placeholders: {{keyword}} = one settings.search.keywords item (or the list for actors that take a list as {{keywords}}), {{location}} = the first settings.search.locations item, {{locations}} = the whole list, {{days}} = posted_within_days, {{max}} = limits.fetch_per_portal. Scraper names and inputs change over time: if one fails, find a replacement with search-actors and update this file in the candidate's store. Prices are billed to the candidate's own Apify account.",
+  "naukri": {
+    "actor": "memo23/naukri-scraper",
+    "input": {"searchQuery": "{{keyword}}", "location": "{{location}}", "maximumJobs": "{{max}}", "sortBy": "date", "freshnessDays": "{{days}}", "includeDescription": false},
+    "callOptions": {"maxTotalChargeUsd": 1},
+    "fields_map": {"title": "title", "company": "staticCompanyName", "location": "locations.label", "experience": "experienceText", "url": "url", "id": "jobId", "posted": "createdDate", "description": "description"},
+    "notes": "staticCompanyName is a naukri.com company-page URL, not a name: derive the company from the URL slug. locations.label is often missing; fall back to the city names in the job's URL slug."
+  },
+  "instahyre": {
+    "actor": "getascraper/instahyre-jobs-scraper",
+    "input": {"jobFunctionSlugs": [], "keywords": "{{keywords}}", "keywordMatch": "any", "includeDetails": false, "maxItems": "{{max}}", "maxPages": 10},
+    "callOptions": {},
+    "fields_map": {"title": "title", "company": "companyName", "location": "locationsRaw", "url": "publicUrl", "id": "jobId", "posted": "scrapedAt", "remote": "isRemote", "description": "description (needs includeDetails:true in pass 2)"},
+    "notes": "URL is 'publicUrl' and location is 'locationsRaw': alias them to url/location before filtering, or the location filter silently does nothing."
+  },
+  "hirist.tech": {
+    "actor": "themineworks/hirist-jobs-scraper",
+    "input": {"keyword": "{{keyword}}", "locations": "{{locations}}", "postedWithinDays": "{{days}}", "maxJobs": "{{max}}", "includeJobDescription": false},
+    "callOptions": {"maxTotalChargeUsd": 1},
+    "fields_map": {"title": "title", "company": "company", "location": "locations", "experience": ["experience_min_years", "experience_max_years"], "url": "url", "id": "job_id", "posted": "posted_at", "remote": "remote"},
+    "notes": "Pass 1 has no description field. For pass 2, re-run the same search with includeJobDescription:true and read only the kept job_ids' descriptions. Omit categorySlug entirely (an empty string fails validation)."
+  },
+  "foundit": {
+    "actor": "themineworks/foundit-jobs-scraper",
+    "input": {"searchKeywords": "{{keywords}}", "location": "{{location}}", "postedWithinDays": "{{days}}", "maxJobs": "{{max}}", "includeJobDescription": false},
+    "callOptions": {},
+    "fields_map": {"title": "title", "company": "company", "location": "location", "experience": ["experience_min_years", "experience_max_years"], "url": "apply_url", "id": "job_id", "posted": "posted_date_text"},
+    "notes": "URL is 'apply_url': alias it to url before filtering. postedWithinDays is a string."
+  },
+  "notes": "Some actors need callOptions.maxTotalChargeUsd (not maxItems), or the call fails with a minimum-cost error. Job pages on these portals are usually not reachable with curl from the sandbox; Apify or the browser are the only ways to get the JD text."
+}
